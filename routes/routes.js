@@ -2,63 +2,61 @@ const express = require("express");
 const { route } = require("express/lib/application");
 const req = require("express/lib/request");
 const routes = express.Router();
-const Person = require("../models/Person");
+const CommingSoonMovies = require("../models/CommingMovies");
 
-routes.post("/", async (req, res) => {
-  const { name, salary, approved } = req.body;
-
+routes.post("/movies", async (req, res) => {
+  const {
+    name,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    title,
+    trailer,
+    poster,
+    genre,
+  } = req.body;
   if (!name) {
     res.status(422).json({ error: "O nome é obrigatório" });
     return;
   }
-  const person = {
+  const movies = {
     name,
-    salary,
-    approved,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    title,
+    trailer,
+    poster,
+    genre,
   };
-  //create mongoose
   try {
-    await Person.create(person);
-
+    await CommingSoonMovies.create(movies);
     res.status(201).json({ message: "inserido com sucesso" });
   } catch (error) {
     res.status(500).json({ error: error });
   }
 });
 
-// routes.delete("/:id", (req, res) => {
-//   const id = req.params.id;
-//   let newDB = filmes.filter((item) => {
-//     if (!item.id) return item;
-//   });
-
-//   filmes = newDB;
-
-//   return res.send(newDB);
-// });
-
-routes.get("/person", async (req, res) => {
+routes.get("/", async (req, res) => {
   try {
-    const people = await Person.find();
-    res.status(200).json(people);
+    const movies = await CommingSoonMovies.find();
+    res.status(200).json({ message: "get All", movies });
   } catch (error) {
     res.status(500).json({ error: error });
   }
 });
 
 routes.get("/:id", async (req, res) => {
-  console.log(req);
   const id = req.params.id;
-
   try {
-    const person = await Person.findOne({ _id: id });
-
-    if (!person) {
+    const movies = await CommingSoonMovies.findOne({ _id: id });
+    if (!movies) {
       res.status(422).json({ message: "O usuario nao foi encontrado" });
       return;
     }
-
-    res.status(200).json(person);
+    res.status(200).json({ message: "get id", movies });
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -66,44 +64,52 @@ routes.get("/:id", async (req, res) => {
 
 routes.patch("/:id", async (req, res) => {
   const id = req.params.id;
-
-  const { name, salary, approved } = req.body;
-
-  const person = {
+  const {
     name,
-    salary,
-    approved,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    title,
+    trailer,
+    poster,
+    genre,
+  } = req.body;
+  const movies = {
+    name,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    title,
+    trailer,
+    poster,
+    genre,
   };
-
   try {
-    const updatedPerson = await Person.updateOne({ _id: id }, person);
-
-    if (updatedPerson.matchedCount === 0) {
+    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, movies);
+    if (updatedMovies.matchedCount === 0) {
       res
         .status(422)
         .json({ message: "O usuario nao foi encontrado para edição" });
       return;
     }
-    res.status(200).json(person);
+    res.status(200).json({ message: "update", movies });
   } catch (error) {
     res.status(500).json({ error: error });
   }
 });
 
-routes.delete("/:id", async (req, res) => {
+routes.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
-
-  const person = await Person.findOne({ _id: id });
-
-  if (!person) {
+  const movies = await CommingSoonMovies.findOne({ _id: id });
+  if (!movies) {
     res.status(422).json({ message: "O usuario nao foi encontrado" });
     return;
   }
   try {
-    await Person.deleteOne({ _id: id });
-
+    await CommingSoonMovies.deleteOne({ _id: id });
     res.status(200).json({ message: "Usuario removido" });
-
   } catch (error) {
     res.status(500).json({ error: error });
   }
