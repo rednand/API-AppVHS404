@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const routes = require("./config/routes");
+const routes = require("./routes/routes");
 const app = express();
 const mongoose = require("mongoose");
-
+require("dotenv").config();
 app.use(morgan("dev"));
 //forma de ler JSON / middlewware
 app.use(express.urlencoded({ extended: true }));
@@ -13,8 +13,16 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-const DB_USER = "rednand";
-const DB_PASSWORD = "leeray10023";
+const personRoutes = require("./routes/routes");
+
+app.use("/person", personRoutes);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Ola express" });
+});
+
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
 mongoose
   .connect(
