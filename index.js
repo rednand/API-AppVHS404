@@ -21,6 +21,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Ola express" });
 });
 
+//colocar no .env local/work
+//DB_USER=rednand
+//DB_PASSWORD=leeray10023
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
