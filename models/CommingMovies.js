@@ -9,7 +9,7 @@ const CommingSoonMovies = mongoose.model("CommingSoonMovies", {
   title: String,
   trailer: String,
   poster: String,
-  genre: Object,
+  genre: Array,
 });
 
 module.exports = CommingSoonMovies;
