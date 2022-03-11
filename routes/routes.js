@@ -16,7 +16,7 @@ routes.post("/movies", async (req, res) => {
     poster,
     genre,
   } = req.body;
-  if (!name) {
+  if (!req.body) {
     res.status(422).json({ error: "O nome é obrigatório" });
     return;
   }
