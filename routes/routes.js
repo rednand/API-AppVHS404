@@ -87,7 +87,10 @@ routes.patch("/:id", async (req, res) => {
     genre,
   };
   try {
-    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, movies);
+    const updatedMovies = await CommingSoonMovies.updateOne(
+      { _id: id },
+      movies
+    );
     if (updatedMovies.matchedCount === 0) {
       res
         .status(422)
