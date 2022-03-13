@@ -16,10 +16,6 @@ routes.post("/movies", async (req, res) => {
     poster,
     genre,
   } = req.body;
-  if (!req.body) {
-    res.status(422).json({ error: "O nome é obrigatório" });
-    return;
-  }
   const movies = {
     name,
     original_language,
@@ -87,10 +83,7 @@ routes.patch("/:id", async (req, res) => {
     genre,
   };
   try {
-    const updatedMovies = await CommingSoonMovies.updateOne(
-      { _id: id },
-      movies
-    );
+    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, movies);
     if (updatedMovies.matchedCount === 0) {
       res
         .status(422)
