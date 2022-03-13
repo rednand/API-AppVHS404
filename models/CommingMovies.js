@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const CommingSoonMovies = mongoose.model("CommingSoonMovies", {
+const movieSchema = new Schema({
   name: String,
   original_language: String,
   original_title: String,
   overview: String,
   release_date: Date,
-  title: String,
   trailer: String,
-  poster: String,
+  poster: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   genre: Array,
 });
 
-module.exports = CommingSoonMovies;
+module.exports = mongoose.model("CommingSoonMovies", movieSchema);
