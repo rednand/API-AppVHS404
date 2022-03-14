@@ -1,14 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const routes = require("./routes/routes");
 const app = express();
 const mongoose = require("mongoose");
 const movieRoutes = require("./routes/routes");
 require("dotenv").config();
 
-app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

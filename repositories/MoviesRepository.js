@@ -1,4 +1,6 @@
+const { process_params } = require("express/lib/router");
 const mongoose = require("mongoose");
+const { param } = require("../routes/routes");
 const Movie = mongoose.model("CommingSoonMovies");
 
 module.exports = {
@@ -12,10 +14,5 @@ module.exports = {
   async create(data) {
     const movie = new Movie(data);
     return await movie.save();
-  },
-
-  async update(data) {
-    const movie = await Movie(data);
-    return await movie;
   },
 };
