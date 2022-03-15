@@ -1,6 +1,5 @@
 const { json } = require("express/lib/response");
 const MoviesRepository = require("../repositories/MoviesRepository");
-const req = require("express/lib/request");
 
 const listAll = async (req, res, next) => {
   try {
@@ -36,14 +35,12 @@ const create = async (req, res, next) => {
   };
 
   try {
-    console.log(req.file);
-    console.log(data);
     const hasData = data.name;
 
     if (hasData) {
-      const movieCreated = await MoviesRepository.create(data);
+      const movies = await MoviesRepository.create(data);
       res.status(201).json({
-        movie: movieCreated,
+        movies,
       });
     } else {
       res.status(400).json({ error: "O filme precisa de um nome" });
