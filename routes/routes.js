@@ -6,7 +6,7 @@ const CommingSoonMovies = require("../models/CommingMovies");
 const Movie = require("../controllers/Movies");
 const upload = require("../upload");
 const MoviesRepository = require("../repositories/MoviesRepository");
-const multer  = require('multer')
+const multer = require("multer");
 
 routes.get("/:id", async (req, res) => {
   const id = req.params.id;
@@ -34,6 +34,7 @@ routes.patch("/:id", upload.single("poster"), async (req, res, next) => {
     genre,
   } = req.body;
   const poster = req.file.url;
+  console.log(poster);
 
   const movies = {
     name,

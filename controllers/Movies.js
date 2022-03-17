@@ -22,7 +22,7 @@ const create = async (req, res, next) => {
     genre,
   } = req.body;
   const poster = req.file.url;
-
+  console.log(poster);
   const data = {
     name,
     original_language,

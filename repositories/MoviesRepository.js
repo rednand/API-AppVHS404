@@ -1,14 +1,12 @@
-const { process_params } = require("express/lib/router");
 const mongoose = require("mongoose");
-const { param } = require("../routes/routes");
 const Movie = mongoose.model("CommingSoonMovies");
 
 module.exports = {
   async listAll() {
-    const movies = await Movie.find(
-      {},
-      "name original_language original_title overview release_date trailer poster genre"
-    );
+    Movie.find().then((filmes) => {
+      console.log(`Total de filmes: ${filmes.length}`);
+    });
+    const movies = await Movie.find();
     return movies;
   },
   async create(data) {

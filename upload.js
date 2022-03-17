@@ -3,7 +3,7 @@ const multer = require("multer");
 const MulterAzureStorage = require("multer-azure-storage");
 
 const getFileName = function (file) {
-  return file.originalname;
+  return file.originalname ;
 };
 
 const azureStorage = new MulterAzureStorage({
