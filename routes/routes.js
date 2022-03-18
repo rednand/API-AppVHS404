@@ -1,13 +1,13 @@
 const express = require("express");
-const { route } = require("express/lib/application");
-const req = require("express/lib/request");
 const routes = express.Router();
 const CommingSoonMovies = require("../models/CommingMovies");
 const Movie = require("../controllers/Movies");
 const upload = require("../upload");
-const MoviesRepository = require("../repositories/MoviesRepository");
 const multer = require("multer");
 
+routes.get("/", (req, res) => {
+  res.render("home");
+});
 routes.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -35,7 +35,6 @@ routes.patch("/:id", upload.single("poster"), async (req, res, next) => {
   } = req.body;
   const poster = req.file.url;
   console.log(poster);
-
   const movies = {
     name,
     original_language,

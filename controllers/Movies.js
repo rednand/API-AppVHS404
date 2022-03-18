@@ -1,4 +1,3 @@
-const { json } = require("express/lib/response");
 const MoviesRepository = require("../repositories/MoviesRepository");
 
 const listAll = async (req, res, next) => {
@@ -21,7 +20,7 @@ const create = async (req, res, next) => {
     trailer,
     genre,
   } = req.body;
-  const poster = req.file.url;
+  const poster = await req.file.url;
   console.log(poster);
   const data = {
     name,
