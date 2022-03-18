@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <title>User</title>
+</head>
+
+<body style="background-color: rgb(244, 238, 238);">
+    <div class="card-panel grey darken-3">
+        <div style="text-align: center;" class="z-depth-5 card-panel">
+            <span class="red-text text-darken-5">
+                <h1>Filmes cadastrados</h1>
+            </span>
+        </div>
+    </div>
+    <table class="bordered striped centered responsive-table">
+        <tr class="card-panel red darken-3">
+            <th>Poster</th>
+            <th style="display: none">Código</th>
+            <th>Nome</th>
+            <th>Lingua Original</th>
+            <th>Título Original</th>
+            <th>Sinopse</th>
+            <th>Lançamento</th>
+            <th>Gênero</th>
+            <th>railer</th>
+        </tr>
+        <% item.forEach (function(item){%>
+        <tr>
+            <td><img src=" <%- item.poster %>" alt="" width="80" height="110">
+            <td style="display: none"><%- item._id %></td>
+            <td><%- item.name %></td>
+            <td><%- item.original_language %></td>
+            <td><%- item.original_title %></td>
+            <td style="width: 20%;"><%- item.overview %></td>
+            <td><%- item.release_date %></td>
+            <td><%- item.genero %></td>
+            <td><%- item.trailer %></td>
+
+            </td>
+        </tr>
+        <%})%>
+    </table>
+</body>
+
+</html>

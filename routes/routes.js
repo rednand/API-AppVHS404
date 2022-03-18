@@ -3,11 +3,40 @@ const routes = express.Router();
 const CommingSoonMovies = require("../models/CommingMovies");
 const Movie = require("../controllers/Movies");
 const upload = require("../upload");
-const multer = require("multer");
 
 routes.get("/", (req, res) => {
   res.render("home");
 });
+
+routes.get("/user", async (req, res) => {
+  CommingSoonMovies.find().then((doc) => {
+    res.render("user", {
+      item: doc,
+    });
+  });
+});
+
+routes.post("/post", upload.single("poster"), (req, res) => {
+  console.log(req.file);
+  var x = new CommingSoonMovies();
+  x.name = req.body.name;
+  x.original_language = req.body.original_language;
+  x.original_title = req.body.original_title;
+  x.release_date = req.body.release_date;
+  x.trailer = req.body.trailer;
+  x.overview = req.body.overview;
+  x.genre = req.body.genre;
+  x.poster = req.file.url;
+  x.save((err, doc) => {
+    if (!err) {
+      console.log("salvo");
+      res.redirect("/user");
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 routes.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -46,11 +75,10 @@ routes.patch("/:id", upload.single("poster"), async (req, res, next) => {
     poster,
   };
 
+  const dados = Object.assign({}, movies, { _id: id });
+
   try {
-    const updatedMovies = await CommingSoonMovies.updateOne(
-      { _id: id },
-      movies
-    );
+    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, dados);
     if (updatedMovies.matchedCount === 0) {
       res
         .status(422)
@@ -78,7 +106,7 @@ routes.delete("/delete/:id", async (req, res) => {
   }
 });
 
-routes.get("/", Movie.listAll);
+routes.get("/movies", Movie.listAll);
 routes.post("/create", upload.single("poster"), Movie.create);
 // routes.delete("/:id", Movie.delete);
 module.exports = routes;

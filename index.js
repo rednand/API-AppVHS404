@@ -11,7 +11,7 @@ const movieRoutes = require("./routes/routes");
 require("dotenv").config();
 
 app.set("view engine", "ejs");
-app.use(express.static("uploads"));
+app.use(express.static("views"));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
