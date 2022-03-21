@@ -8,6 +8,9 @@ routes.get("/", (req, res) => {
   res.render("home");
 });
 
+routes.get("/total", Movie.listAll, (req, res) => {
+  res.render("post");
+});
 routes.get("/user", async (req, res) => {
   CommingSoonMovies.find().then((doc) => {
     res.render("user", {
@@ -42,7 +45,7 @@ routes.get("/:id", async (req, res) => {
   try {
     const movies = await CommingSoonMovies.findOne({ _id: id });
     if (!movies) {
-      res.status(422).json({ message: "O usuario nao foi encontrado" });
+      res.status(422).json({ message: "O filme nao foi encontrado" });
       return;
     }
     res.status(200).json({ message: "get id", movies });
@@ -82,7 +85,7 @@ routes.patch("/:id", upload.single("poster"), async (req, res, next) => {
     if (updatedMovies.matchedCount === 0) {
       res
         .status(422)
-        .json({ message: "O usuario nao foi encontrado para edição" });
+        .json({ message: "O filme nao foi encontrado" });
       return;
     }
     res.status(200).json({ message: "update", movies });
@@ -106,7 +109,7 @@ routes.delete("/delete/:id", async (req, res) => {
   }
 });
 
-routes.get("/movies", Movie.listAll);
+routes.get("/total", Movie.listAll);
 routes.post("/create", upload.single("poster"), Movie.create);
 // routes.delete("/:id", Movie.delete);
 module.exports = routes;
