@@ -21,16 +21,16 @@ routes.get("/user", async (req, res) => {
 
 routes.post("/post", upload.single("poster"), (req, res) => {
   console.log(req.file);
-  var x = new CommingSoonMovies();
-  x.name = req.body.name;
-  x.original_language = req.body.original_language;
-  x.original_title = req.body.original_title;
-  x.release_date = req.body.release_date;
-  x.trailer = req.body.trailer;
-  x.overview = req.body.overview;
-  x.genre = req.body.genre;
-  x.poster = req.file.url;
-  x.save((err, doc) => {
+  var movie = new CommingSoonMovies();
+  movie.name = req.body.name;
+  movie.original_language = req.body.original_language;
+  movie.original_title = req.body.original_title;
+  movie.release_date = req.body.release_date;
+  movie.trailer = req.body.trailer;
+  movie.overview = req.body.overview;
+  movie.genre = req.body.genre;
+  movie.poster = req.file.url;
+  movie.save((err, doc) => {
     if (!err) {
       console.log("salvo");
       res.redirect("/user");

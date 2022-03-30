@@ -13,7 +13,7 @@ const movieSchema = new Schema({
     required: false,
     trim: true,
   },
-  genre: [String],
+  genre: new Array(),
 });
 
 module.exports = mongoose.model("CommingSoonMovies", movieSchema);
