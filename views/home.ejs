@@ -5,10 +5,19 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Multer</title>
   <style>
     html {
       background-color: rgb(11, 7, 7);
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    h1 {
+      height: 6rem;
+      text-align: center;
+      padding-top: 1%;
+      color: rgb(247, 93, 93);
     }
 
     .divForm {
@@ -24,11 +33,12 @@
       color: rgb(247, 93, 93);
       font-size: 1.2rem;
       font-weight: 900;
-      letter-spacing: 0.6rem;
+      letter-spacing: 0.2rem;
     }
 
     input {
-      margin: 1rem;
+      margin: 3%;
+      border: none;
       width: 100%;
       height: 2rem;
       box-shadow: -5px 5px 0px 0px rgb(247, 93, 93), 0 0 0 transparent;
@@ -39,29 +49,68 @@
       min-width: 100%;
       border-color: beige;
     }
+
+    button {
+      color: #151515;
+      background-color: rgb(247, 93, 93);
+      margin: 5% 5%;
+      height: 2rem;
+      width: 100%;
+      border: none;
+    }
+
+    .button_genre {
+      margin: 1% 5% 5%;
+      display: inline-block;
+      width: 25%;
+    }
   </style>
 </head>
 
 <body>
+  <h1>Cadastro de filme</h1>
   <div class="divForm">
     <form action="/post" method="POST" enctype="multipart/form-data">
       <label for="">Nome</label>
-      <input type="text" name="name" placeholder="input First name">
+      <input type="text" name="name" placeholder="Nome do filme">
       <label for="">Lingua Original</label>
-      <input type="text" name="original_language" placeholder="input Last name">
+      <input type="text" name="original_language" placeholder="Língua">
       <label for="">Titulo Original</label>
-      <input type="text" name="original_title" placeholder="input Last name">
+      <input type="text" name="original_title" placeholder="Título original">
       <label for="">Overview</label>
-      <input type="text" name="overview" placeholder="input Last name">
+      <input type="text" name="overview" placeholder="Sinopse">
       <label for="">Trailer</label>
-      <input type="text" name="trailer" placeholder="input Last name">
+      <input type="text" name="trailer" placeholder="Trailer">
       <label for="">Lançamento</label>
-      <input type="datetime-local" name="release_date" placeholder="input Last name">
+      <input type="datetime-local" name="release_date" placeholder="Data">
+      <label for="">Gênero</label>
+      <input type="text" name="genre" placeholder="Gêneros">
+      <button class="button_genre" type="button" onclick="add()">Adicionar mais gêneros</button>
+      <button class="button_genre" type="button" onclick="remove()">Remover</button>
+      <div id="new_input"></div>
+      <input type="hidden" value="1" id="total_chq">
       <label for="">Poster</label>
       <input type="file" name="poster">
-      <button type="submit">Cadastrar</button>
+      <button class="waves-effect waves-light btn" type="submit">Cadastrar</button>
     </form>
   </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  function add() {
+    var new_chq_no = parseInt($('#total_chq').val()) + 1;
+    var new_input = "<input type='text' name='genre' id='new_" + new_chq_no + "'>";
+    $('#new_input').append(new_input);
+    $('#total_chq').val(new_chq_no)
+  }
+
+  function remove() {
+    var last_chq_no = $('#total_chq').val();
+    if (last_chq_no > 1) {
+      $('#new_' + last_chq_no).remove();
+      $('#total_chq').val(last_chq_no - 1);
+    }
+  }
+</script>
 
 </html>

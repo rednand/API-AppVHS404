@@ -9,29 +9,33 @@
     <title>User</title>
 </head>
 
-<body style="background-color: rgb(244, 238, 238);">
-    <div class="card-panel grey darken-3">
-        <div style="text-align: center;" class="z-depth-5 card-panel">
-            <span class="red-text text-darken-5">
+<body class="black">
+    <div class="card-panel black darken-3">
+        <div class=" center-align z-depth-5 card grey lighten-5 card-panel">
+            <span class="red-text text-darken-2">
                 <h1>Filmes cadastrados</h1>
+                <a class="waves-effect waves-light btn black darken-3" href="/total">
+                    Formato JSON
+                </a>
             </span>
         </div>
     </div>
-    <table class="bordered striped centered responsive-table">
-        <tr class="card-panel red darken-3">
-            <th>Poster</th>
+    <table class="responsive-table bordered striped centered grey lighten-2 accent-5">
+        <tr class="card-panel grey lighten-1">
+            <th class=" center-align">Poster</th>
             <th style="display: none">Código</th>
-            <th>Nome</th>
-            <th>Lingua Original</th>
-            <th>Título Original</th>
-            <th>Sinopse</th>
-            <th>Lançamento</th>
-            <th>Gênero</th>
-            <th>railer</th>
+            <th class=" center-align">Nome</th>
+            <th class=" center-align">Lingua Original</th>
+            <th class=" center-align">Título Original</th>
+            <th class=" center-align">Sinopse</th>
+            <th class=" center-align">Lançamento</th>
+            <th class=" center-align">Gênero</th>
+            <th class=" center-align">Trailer</th>
+            <th class=" center-align">Excluir</th>
         </tr>
         <% item.forEach (function(item){%>
         <tr>
-            <td><img src=" <%- item.poster %>" alt="" width="80" height="110">
+            <td><img src=" <%- item.poster %>" alt="" width="80" height="110"></td>
             <td style="display: none"><%- item._id %></td>
             <td><%- item.name %></td>
             <td><%- item.original_language %></td>
@@ -40,11 +44,29 @@
             <td><%- item.release_date %></td>
             <td><%- item.genre %></td>
             <td><%- item.trailer %></td>
-
+            <td>
+                <a class="waves-effect waves-light btn black darken-3" href="/delete/<%- item._id %>?_method=DELETE">
+                    Excluir
+                </a>
             </td>
         </tr>
         <%})%>
     </table>
 </body>
+<script>
+    const url = "/delete/<%- item._id %>";
+
+    $.ajax({
+        method: "DELETE",
+        url: url,
+        success: function (data) {
+            console.log(data);
+        },
+
+        error: function (data) {
+            console.error(data);
+        },
+    });
+</script>
 
 </html>

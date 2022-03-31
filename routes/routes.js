@@ -83,15 +83,27 @@ routes.patch("/:id", upload.single("poster"), async (req, res, next) => {
   try {
     const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, dados);
     if (updatedMovies.matchedCount === 0) {
-      res
-        .status(422)
-        .json({ message: "O filme nao foi encontrado" });
+      res.status(422).json({ message: "O filme nao foi encontrado" });
       return;
     }
     res.status(200).json({ message: "update", movies });
   } catch (error) {
     res.status(500).json({ error: error });
   }
+});
+routes.use(function (req, res, next) {
+  // this middleware will call for each requested
+  // and we checked for the requested query properties
+  // if _method was existed
+  // then we know, clients need to call DELETE request instead
+  if (req.query._method == "DELETE") {
+    // change the original METHOD
+    // into DELETE method
+    req.method = "DELETE";
+    // and set requested url to /delete/:id
+    req.url = req.path;
+  }
+  next();
 });
 
 routes.delete("/delete/:id", async (req, res) => {
@@ -103,7 +115,7 @@ routes.delete("/delete/:id", async (req, res) => {
   }
   try {
     await CommingSoonMovies.deleteOne({ _id: id });
-    res.status(200).json({ message: "Usuario removido" });
+    res.status(200).json({ message: "Filme removido" });
   } catch (error) {
     res.status(500).json({ error: error });
   }
