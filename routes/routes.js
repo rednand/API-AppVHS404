@@ -20,7 +20,6 @@ routes.get("/user", async (req, res) => {
 });
 
 routes.post("/post", upload.single("poster"), (req, res) => {
-  console.log(req.file);
   var movie = new CommingSoonMovies();
   movie.name = req.body.name;
   movie.original_language = req.body.original_language;
