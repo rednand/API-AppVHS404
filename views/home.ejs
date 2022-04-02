@@ -1,135 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="imagem/png"
+      href="https://horrormoviesapi.blob.core.windows.net/images-api-horror-movies/favblack.png"
+    />
+    <title>Cadastrar Filmes</title>
+    <style>
+      .divForm {
+        margin: auto;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="imagem/png"
-    href="https://horrormoviesapi.blob.core.windows.net/images-api-horror-movies/favblack.png" />
-  <title>Cadastrar Filmes</title>
-  <style>
-    html {
-      background-color: rgb(11, 7, 7);
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      label {
+        color: rgb(247, 93, 93);
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: 0.2rem;
+      }
+
+      input {
+        box-shadow: -5px 5px 0px 0px rgb(247, 93, 93), 0 0 0 transparent;
+        max-width: 100%;
+        min-width: 100%;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: rgb(11, 7, 7)">
+    <h1 class="text-center fw-bold text-danger my-4">Cadastro de filme</h1>
+    <div class="col-md-3 d-grid gap-2 col-6 mx-auto my-2">
+      <button class="btn btn-danger rounded-0">
+        <a class="link-dark fw-bold" href="/user"
+          >Tabela de filmes cadastrados</a
+        >
+      </button>
+    </div>
+
+    <div class="mb-3">
+      <form
+        style="width: 50%; margin: auto"
+        class="row g-3"
+        action="/post"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="col-md-12">
+          <label for="">Nome</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="name"
+            placeholder="Nome do filme"
+          />
+        </div>
+        <div class="col-md-12">
+          <label for="">Lingua Original</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="original_language"
+            placeholder="Língua"
+          />
+        </div>
+        <div class="col-md-12">
+          <label for="">Titulo Original</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="original_title"
+            placeholder="Título original"
+          />
+        </div>
+
+        <div class="col-md-12">
+          <label for="">Overview</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="overview"
+            placeholder="Sinopse"
+          />
+        </div>
+
+        <div class="col-md-12">
+          <label for="">Trailer</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="trailer"
+            placeholder="Trailer"
+          />
+        </div>
+        <div class="col-md-12">
+          <label for="">Lançamento</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="datetime-local"
+            name="release_date"
+            placeholder="Data"
+          />
+        </div>
+        <div class="col-md-12">
+          <label for="">Gênero</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="text"
+            name="genre"
+            placeholder="Gêneros"
+          />
+        </div>
+        <div class="col-md-6 d-grid gap-2 col-6 mx-auto">
+          <button
+            class="btn rounded-0 btn-danger"
+            type="button"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Adicione outro gênero caso possua mais de um"
+            onclick="add()"
+          >
+            Adicionar mais gêneros
+          </button>
+        </div>
+        <div class="col-md-6 d-grid gap-2 col-6 mx-auto">
+          <button
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Remova um gênero adicionado a mais"
+            class="btn rounded-0 btn-danger"
+            type="button"
+            onclick="remove()"
+          >
+            Remover
+          </button>
+        </div>
+        <div id="new_input"></div>
+        <input
+          class="form-control rounded-0 border border-secondary"
+          type="hidden"
+          value="1"
+          id="total_chq"
+        />
+        <div class="mb-3">
+          <label for="poster" class="form-label">Poster</label>
+          <input
+            class="form-control rounded-0 border border-secondary"
+            type="file"
+            name="poster"
+          />
+        </div>
+        <div class="d-grid gap-2">
+          <button
+            class="btn rounded-0 btn-danger btn-lg"
+            role="button"
+            type="submit"
+          >
+            Cadastrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    function add() {
+      var new_chq_no = parseInt($("#total_chq").val()) + 1;
+      var new_input =
+        "<input type='text' class='form-control rounded-0 border border-secondary' name='genre' id='new_" +
+        new_chq_no +
+        "'>";
+      $("#new_input").append(new_input);
+      $("#total_chq").val(new_chq_no);
     }
 
-    h1 {
-      height: 2rem;
-      text-align: center;
-      padding: 2% 0;
-      color: rgb(247, 93, 93);
+    function remove() {
+      var last_chq_no = $("#total_chq").val();
+      if (last_chq_no > 1) {
+        $("#new_" + last_chq_no).remove();
+        $("#total_chq").val(last_chq_no - 1);
+      }
     }
-
-    .button_list {
-      color: #151515;
-      background-color: rgb(247, 93, 93);
-      margin: 0% 40% 2%;
-      height: 3rem;
-      width: 20%;
-    }
-
-
-    .button_list a {
-      color: #151515;
-      font-size: 1.5rem;
-      text-align: center;
-      text-decoration: none;
-
-    }
-
-    .divForm {
-      margin: auto;
-      margin: auto 30%;
-    }
-
-    form {
-      margin: auto;
-    }
-
-    label {
-      color: rgb(247, 93, 93);
-      font-size: 1.2rem;
-      font-weight: 900;
-      letter-spacing: 0.2rem;
-    }
-
-    input {
-      margin: 3%;
-      border: none;
-      width: 100%;
-      height: 2rem;
-      box-shadow: -5px 5px 0px 0px rgb(247, 93, 93), 0 0 0 transparent;
-      border-radius: 0;
-      padding: 3px 10px 3px 40px;
-      padding-top: 0.8em;
-      max-width: 100%;
-      min-width: 100%;
-      border-color: beige;
-    }
-
-    button {
-      color: #151515;
-      background-color: rgb(247, 93, 93);
-      margin: 5% 5%;
-      height: 2rem;
-      width: 100%;
-      border: none;
-    }
-
-    .button_genre {
-      margin: 1% 5% 5%;
-      display: inline-block;
-      width: 25%;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>Cadastro de filme</h1>
-  <button class="button_list"><a href="/user">Lista de filmes</a></button>
-  <div class="divForm">
-    <form action="/post" method="POST" enctype="multipart/form-data">
-      <label for="">Nome</label>
-      <input type="text" name="name" placeholder="Nome do filme">
-      <label for="">Lingua Original</label>
-      <input type="text" name="original_language" placeholder="Língua">
-      <label for="">Titulo Original</label>
-      <input type="text" name="original_title" placeholder="Título original">
-      <label for="">Overview</label>
-      <input type="text" name="overview" placeholder="Sinopse">
-      <label for="">Trailer</label>
-      <input type="text" name="trailer" placeholder="Trailer">
-      <label for="">Lançamento</label>
-      <input type="datetime-local" name="release_date" placeholder="Data">
-      <label for="">Gênero</label>
-      <input type="text" name="genre" placeholder="Gêneros">
-      <button class="button_genre" type="button" onclick="add()">Adicionar mais gêneros</button>
-      <button class="button_genre" type="button" onclick="remove()">Remover</button>
-      <div id="new_input"></div>
-      <input type="hidden" value="1" id="total_chq">
-      <label for="">Poster</label>
-      <input type="file" name="poster">
-      <button class="waves-effect waves-light btn" type="submit">Cadastrar</button>
-    </form>
-  </div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
-  function add() {
-    var new_chq_no = parseInt($('#total_chq').val()) + 1;
-    var new_input = "<input type='text' name='genre' id='new_" + new_chq_no + "'>";
-    $('#new_input').append(new_input);
-    $('#total_chq').val(new_chq_no)
-  }
-
-  function remove() {
-    var last_chq_no = $('#total_chq').val();
-    if (last_chq_no > 1) {
-      $('#new_' + last_chq_no).remove();
-      $('#total_chq').val(last_chq_no - 1);
-    }
-  }
-</script>
-
+  </script>
 </html>
