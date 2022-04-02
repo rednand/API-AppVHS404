@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
-const routes = require("./routes/routes");
+const routes = require("../routes/routes");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const movieRoutes = require("./routes/routes");
+const movieRoutes = require("../routes/routes");
 
 require("dotenv").config();
 
