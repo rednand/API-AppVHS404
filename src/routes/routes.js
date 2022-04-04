@@ -1,0 +1,36 @@
+const express = require("express");
+const routes = express.Router();
+const CommingSoonMovies = require("../models/CommingMovies");
+const Movie = require("../controllers/Movies");
+const upload = require("../../upload");
+
+routes.use(function (req, res, next) {
+  // this middleware will call for each requested
+  // and we checked for the requested query properties
+  // if _method was existed
+  // then we know, clients need to call DELETE request instead
+  if (req.query._method == "DELETE") {
+    // change the original METHOD
+    // into DELETE method
+    req.method = "DELETE";
+    // and set requested url to /delete/:id
+    req.url = req.path;
+  }
+  next();
+});
+
+routes.get("/", (req, res) => {
+  res.render("../src/views/home");
+});
+
+routes.get("/total", Movie.listAll, (req, res) => {
+  res.render("post");
+});
+
+routes.get("/user", Movie.listMovieTable);
+routes.post("/post", upload.single("poster"), Movie.CreateMovie);
+routes.get("/:id", Movie.GetMovieById);
+routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
+routes.delete("/delete/:id", Movie.DeleteMovie);
+
+module.exports = routes;

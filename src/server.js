@@ -2,15 +2,16 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
-const routes = require("../routes/routes");
+const routes = require("../src/routes/routes");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const movieRoutes = require("../routes/routes");
+const movieRoutes = require("../src/routes/routes");
 
 require("dotenv").config();
 
 app.set("view engine", "ejs");
+app.set("views", './views')
 app.use(express.static("views"));
 app.use(morgan("dev"));
 app.use(express.json());
