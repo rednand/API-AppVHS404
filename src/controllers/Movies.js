@@ -9,7 +9,8 @@ const DeleteMovie = async (req, res) => {
   }
   try {
     await CommingSoonMovies.deleteOne({ _id: id });
-    res.status(200).json({ message: "Filme removido" });
+    res.redirect("http://localhost:3000/exclu");
+    // res.status(200).json({ message: "Filme removido" });
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -77,11 +78,11 @@ const CreateMovie = async (req, res) => {
     movie.trailer = req.body.trailer;
     movie.overview = req.body.overview;
     movie.genre = req.body.genre;
-    movie.poster = req.file.url;
+    movie.poster = req.body.poster;
     movie.save((err, doc) => {
       if (!err) {
         console.log("salvo");
-        res.redirect("user");
+        res.redirect("table");
       } else {
         console.log(err);
       }
@@ -97,7 +98,7 @@ const CreateMovie = async (req, res) => {
 const listMovieTable = async (req, res) => {
   try {
     CommingSoonMovies.find().then((doc) => {
-      res.render("../src/views/user", {
+      res.render("../src/views/table", {
         item: doc,
       });
     });

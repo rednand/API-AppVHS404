@@ -20,15 +20,21 @@ routes.use(function (req, res, next) {
 });
 
 routes.get("/", (req, res) => {
-  res.render("../src/views/home");
+  res.render("../src/views/form");
 });
+
+routes.get("/exclu", (req, res) => {
+  res.render("../src/views/exclu");
+});
+
 
 routes.get("/total", Movie.listAll, (req, res) => {
   res.render("post");
 });
 
-routes.get("/user", Movie.listMovieTable);
-routes.post("/post", upload.single("poster"), Movie.CreateMovie);
+routes.get("/table", Movie.listMovieTable);
+// routes.post("/post", upload.single("poster"), Movie.CreateMovie);
+routes.post("/post", Movie.CreateMovie);
 routes.get("/:id", Movie.GetMovieById);
 routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
 routes.delete("/delete/:id", Movie.DeleteMovie);

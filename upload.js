@@ -1,3 +1,4 @@
+//não utilizado por não ter inscrição paga no Azure
 require("dotenv/config");
 const { request } = require("express");
 const multer = require("multer");

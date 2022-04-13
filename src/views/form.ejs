@@ -28,7 +28,7 @@
     <h1 class="text-center fw-bold text-danger my-4">Cadastro de filme</h1>
     <div class="col-md-3 d-grid gap-2 col-6 mx-auto my-2">
       <button class="btn btn-danger rounded-0">
-        <a class="link-dark fw-bold" href="/user"
+        <a class="link-dark fw-bold" href="/table"
           >Tabela de filmes cadastrados</a
         >
       </button>
@@ -40,7 +40,7 @@
         class="row g-3"
         action="/post"
         method="POST"
-        enctype="multipart/form-data"
+        enctype="application/x-www-form-urlencoded"
       >
         <div class="col-md-12">
           <label for="">Nome</label>
@@ -138,14 +138,27 @@
           value="1"
           id="total_chq"
         />
-        <div class="mb-3">
+        <div class="d-grid gap-2">
           <label for="poster" class="form-label">Poster</label>
+          <button class="btn rounded-0 btn-danger" name="poster">
+            <a
+              target="_blank"
+              class="link-dark fw-bold"
+              href="https://imgbox.com/"
+            >
+              Adicionar imagem</a
+            >
+          </button>
+        </div>
+        <div class="mb-3">
+          <label for="poster" class="form-label">Link do Poster</label>
           <input
             class="form-control rounded-0 border border-secondary"
-            type="file"
+            type="text"
             name="poster"
           />
         </div>
+
         <div class="d-grid gap-2">
           <button
             class="btn rounded-0 btn-danger btn-lg"
