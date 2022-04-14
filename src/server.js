@@ -7,7 +7,6 @@ const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const movieRoutes = require("../src/routes/routes");
-
 require("dotenv").config();
 
 app.set("view engine", "ejs");

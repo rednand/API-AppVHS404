@@ -16,6 +16,9 @@
   <body>
     <div>
       <div class="bg-danger" style="width: 100%; padding: 2%">
+        <div class="bg-danger" style="padding: 0 0 2%">
+          <a class="link-dark" href="/"> Voltar para cadastro </a>
+        </div>
         <h1>Filmes cadastrados</h1>
         <button type="button" class="btn btn-dark">
           <a class="link-danger" href="/total"> Formato JSON </a>
@@ -54,7 +57,9 @@
             <td><%- item.trailer %></td>
             <td>
               <button type="button" class="btn btn btn-danger">
-                <a class="link-dark" href="/delete/<%- item._id %>?_method=DELETE"> Excluir </a>
+                <a class="link-dark" href="/<%- item._id %>?_method=DELETE">
+                  Excluir
+                </a>
               </button>
             </td>
           </tr>
@@ -71,7 +76,7 @@
   ></script>
 
   <script>
-    const url = "/delete/<%- item._id %>";
+    const url = "/<%- item._id %>";
 
     $.ajax({
       method: "DELETE",

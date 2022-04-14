@@ -1,7 +1,7 @@
 const express = require("express");
 const routes = express.Router();
-const CommingSoonMovies = require("../models/CommingMovies");
-const Movie = require("../controllers/Movies");
+const CommingSoonMovies = require("../models/CommingMovie");
+const Movie = require("../controllers/MoviesReq");
 const upload = require("../../upload");
 
 routes.use(function (req, res, next) {
@@ -27,7 +27,6 @@ routes.get("/exclu", (req, res) => {
   res.render("../src/views/exclu");
 });
 
-
 routes.get("/total", Movie.listAll, (req, res) => {
   res.render("post");
 });
@@ -37,6 +36,6 @@ routes.get("/table", Movie.listMovieTable);
 routes.post("/post", Movie.CreateMovie);
 routes.get("/:id", Movie.GetMovieById);
 routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
-routes.delete("/delete/:id", Movie.DeleteMovie);
+routes.delete("/:id", Movie.DeleteMovie);
 
 module.exports = routes;

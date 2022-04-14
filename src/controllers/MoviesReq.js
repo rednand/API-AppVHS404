@@ -1,4 +1,4 @@
-const CommingSoonMovies = require("../models/CommingMovies");
+const CommingSoonMovies = require("../models/CommingMovie");
 
 const DeleteMovie = async (req, res) => {
   const id = req.params.id;
@@ -9,7 +9,7 @@ const DeleteMovie = async (req, res) => {
   }
   try {
     await CommingSoonMovies.deleteOne({ _id: id });
-    res.redirect("http://localhost:3000/exclu");
+    res.redirect("exclu");
     // res.status(200).json({ message: "Filme removido" });
   } catch (error) {
     res.status(500).json({ error: error });
