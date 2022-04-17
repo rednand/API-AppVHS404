@@ -2,22 +2,22 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
-const routes = require("../src/routes/routes");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const movieRoutes = require("../src/routes/routes");
+const movieRoutes = require("../src/routes/MovieRoutes.js");
+const castRoutes = require("../src/routes/CastRoutes.js");
 require("dotenv").config();
 
 app.set("view engine", "ejs");
-app.set("views", './views')
+app.set("views", "./views");
 app.use(express.static("views"));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(routes);
-app.use("/movies", movieRoutes);
+app.use(castRoutes);
+app.use(movieRoutes)
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE");
@@ -31,7 +31,6 @@ app.use(function (req, res, next) {
 
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
-
 
 mongoose
   .connect(

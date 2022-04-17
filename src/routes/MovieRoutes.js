@@ -1,8 +1,6 @@
 const express = require("express");
 const routes = express.Router();
-const CommingSoonMovies = require("../models/CommingMovie");
-const Movie = require("../controllers/MoviesReq");
-const upload = require("../../upload");
+const Movie = require("../controllers/MoviesController");
 
 routes.use(function (req, res, next) {
   // this middleware will call for each requested
@@ -32,10 +30,11 @@ routes.get("/total", Movie.listAll, (req, res) => {
 });
 
 routes.get("/table", Movie.listMovieTable);
-// routes.post("/post", upload.single("poster"), Movie.CreateMovie);
 routes.post("/post", Movie.CreateMovie);
 routes.get("/:id", Movie.GetMovieById);
-routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
+routes.patch("/:id", Movie.EditMovie);
 routes.delete("/:id", Movie.DeleteMovie);
+// routes.post("/post", upload.single("poster"), Movie.CreateMovie);
+// routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
 
 module.exports = routes;
