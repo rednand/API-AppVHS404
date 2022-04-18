@@ -26,8 +26,9 @@ const EditMovie = async (req, res, next) => {
     release_date,
     trailer,
     genre,
+    castcrew,
+    poster,
   } = req.body;
-  const poster = req.file.url;
   console.log(poster);
   const movies = {
     name,
@@ -37,6 +38,7 @@ const EditMovie = async (req, res, next) => {
     release_date,
     trailer,
     genre,
+    castcrew,
     poster,
   };
 
@@ -96,11 +98,13 @@ const CreateMovie = async (req, res) => {
 
 const listMovieTable = async (req, res) => {
   try {
-    CommingSoonMovies.find().then((doc) => {
-      res.render("../src/views/table", {
-        item: doc,
+    CommingSoonMovies.find()
+      .populate("castcrew")
+      .then((doc) => {
+        res.render("../src/views/table", {
+          item: doc,
+        });
       });
-    });
   } catch (err) {
     res.status(500).json({
       message: "Internal server error",
@@ -113,7 +117,7 @@ const listAll = async (req, res, next) => {
   try {
     const moviesJSON = await CommingSoonMovies.find().then((filmes) => {
       console.log(`Total de filmes: ${filmes.length}`);
-      const movies = CommingSoonMovies.find();
+      const movies = CommingSoonMovies.find().populate("castcrew");
       return movies;
     });
 

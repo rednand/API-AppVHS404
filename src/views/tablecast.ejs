@@ -17,11 +17,11 @@
     <div>
       <div class="bg-danger" style="width: 100%; padding: 2%">
         <div class="bg-danger" style="padding: 0 0 2%">
-          <a class="link-dark" href="/"> Voltar para cadastro </a>
+          <a class="link-dark" href="/cast"> Voltar para cadastro </a>
         </div>
-        <h1>Cast & rewcadas</h1>
+        <h1>Cast & Crew</h1>
         <button type="button" class="btn btn-dark">
-          <a class="link-danger" href="/total"> Formato JSON </a>
+          <a class="link-danger" href="/totalcast"> Formato JSON </a>
         </button>
       </div>
     </div>
@@ -29,32 +29,22 @@
       <table class="table table-dark align-middle table-striped">
         <thead>
           <tr class="border border-5 border-danger">
-            <th scope="col">Poster</th>
-            <th style="display: none">Código</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Lingua Original</th>
-            <th scope="col">Título Original</th>
-            <th scope="col">Sinopse</th>
-            <th scope="col">Lançamento</th>
-            <th scope="col">Gênero</th>
-            <th scope="col">Trailer</th>
+            <th scope="col">ID</th>
+            <th scope="col">Diretor</th>
+            <th scope="col">Elenco</th>
+            <th scope="col">Roteiro</th>
+            <th scope="col">Produtores</th>
             <th scope="col">Excluir</th>
           </tr>
         </thead>
         <tbody>
           <% item.forEach (function(item){%>
           <tr class="border border-5 border-danger">
-            <td>
-              <img src=" <%- item.poster %>" alt="" width="80" height="110" />
-            </td>
-            <td style="display: none"><%- item._id %></td>
-            <td><%- item.name %></td>
-            <td><%- item.original_language %></td>
-            <td><%- item.original_title %></td>
-            <td><%- item.overview %></td>
-            <td><%- item.release_date %></td>
-            <td><%- item.genre %></td>
-            <td><%- item.trailer %></td>
+            <td><%- item._id %></td>
+            <td><%- item.director %></td>
+            <td><%- item.cast %></td>
+            <td><%- item.writer %></td>
+            <td><%- item.producers %></td>
             <td>
               <button type="button" class="btn btn btn-danger">
                 <a class="link-dark" href="/<%- item._id %>?_method=DELETE">

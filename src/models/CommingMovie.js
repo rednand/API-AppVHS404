@@ -8,6 +8,10 @@ const movieSchema = new Schema({
   overview: String,
   release_date: Date,
   trailer: String,
+  castcrew: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "castcrew",
+  },
   poster: {
     type: String,
     required: false,
