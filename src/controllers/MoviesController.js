@@ -3,7 +3,7 @@ const CommingSoonMovies = require("../models/CommingMovie");
 const listAll = async (req, res, next) => {
   try {
     const { page = 1, limit = 30 } = req.query;
-    const movies = await CommingSoonMovies.find()
+    const movies = await CommingSoonMovies.find().populate("castcrew")
       .limit(limit * 1)
       .skip((page - 1) * limit);
     console.log("total movies:", movies.length);
@@ -80,13 +80,35 @@ const DeleteMovie = async (req, res) => {
     return;
   }
   try {
-    await CommingSoonMovies.deleteOne({ _id: id });
-    res.redirect("exclu");
-    // res.status(200).json({ message: "Filme removido" });
-  } catch (error) {
-    res.status(500).json({ error: error });
+    CommingSoonMovies.find()
+      .populate("castcrew")
+      .then((doc) => {
+        res.render("../src/views/table", {
+          item: doc,
+        });
+      });
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: err,
+    });
   }
 };
+
+// const listAll = async (req, res, next) => {
+//   try {
+//     const moviesJSON = await CommingSoonMovies.find().then((filmes) => {
+//       console.log(`Total de filmes: ${filmes.length}`);
+//       const movies = CommingSoonMovies.find().populate("castcrew");
+//       return movies;
+//     });
+//     await CommingSoonMovies.deleteOne({ _id: id });
+//     res.redirect("exclu");
+//     // res.status(200).json({ message: "Filme removido" });
+//   } catch (error) {
+//     res.status(500).json({ error: error });
+//   }
+// };
 
 const EditMovie = async (req, res, next) => {
   const id = req.params.id;

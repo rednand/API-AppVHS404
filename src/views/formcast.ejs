@@ -28,8 +28,8 @@
     <h1 class="text-center fw-bold text-danger my-4">Cadastro de filme</h1>
     <div class="col-md-3 d-grid gap-2 col-6 mx-auto my-2">
       <button class="btn btn-danger rounded-0">
-        <a class="link-dark fw-bold" href="/table"
-          >Tabela de filmes cadastrados</a
+        <a class="link-dark fw-bold" href="/tablecast"
+          >Tabela cast & crew</a
         >
       </button>
     </div>
@@ -38,72 +38,34 @@
       <form
         style="width: 50%; margin: auto"
         class="row g-3"
-        action="/post"
+        action="/postcast"
         method="POST"
         enctype="application/x-www-form-urlencoded"
       >
         <div class="col-md-12">
-          <label for="">Nome</label>
+          <label for="">Diretor</label>
           <input
             class="form-control rounded-0 border border-secondary"
             type="text"
-            name="name"
+            name="director"
             placeholder="Nome do filme"
           />
         </div>
         <div class="col-md-12">
-          <label for="">Lingua Original</label>
+          <label for="">Roteiro</label>
           <input
             class="form-control rounded-0 border border-secondary"
             type="text"
-            name="original_language"
+            name="writer"
             placeholder="Língua"
           />
         </div>
         <div class="col-md-12">
-          <label for="">Titulo Original</label>
+          <label for="">Elenco</label>
           <input
             class="form-control rounded-0 border border-secondary"
             type="text"
-            name="original_title"
-            placeholder="Título original"
-          />
-        </div>
-
-        <div class="col-md-12">
-          <label for="">Overview</label>
-          <input
-            class="form-control rounded-0 border border-secondary"
-            type="text"
-            name="overview"
-            placeholder="Sinopse"
-          />
-        </div>
-
-        <div class="col-md-12">
-          <label for="">Trailer</label>
-          <input
-            class="form-control rounded-0 border border-secondary"
-            type="text"
-            name="trailer"
-            placeholder="Trailer"
-          />
-        </div>
-        <div class="col-md-12">
-          <label for="">Lançamento</label>
-          <input
-            class="form-control rounded-0 border border-secondary"
-            type="datetime-local"
-            name="release_date"
-            placeholder="Data"
-          />
-        </div>
-        <div class="col-md-12">
-          <label for="">Gênero</label>
-          <input
-            class="form-control rounded-0 border border-secondary"
-            type="text"
-            name="genre"
+            name="cast"
             placeholder="Gêneros"
           />
         </div>
@@ -138,27 +100,46 @@
           value="1"
           id="total_chq"
         />
-        <div class="d-grid gap-2">
-          <label for="poster" class="form-label">Poster</label>
-          <button class="btn rounded-0 btn-danger" name="poster">
-            <a
-              target="_blank"
-              class="link-dark fw-bold"
-              href="https://imgbox.com/"
-            >
-              Adicionar imagem</a
-            >
-          </button>
-        </div>
-        <div class="mb-3">
-          <label for="poster" class="form-label">Link do Poster</label>
+        <div class="col-md-12">
+          <label for="">Produtores</label>
           <input
             class="form-control rounded-0 border border-secondary"
             type="text"
-            name="poster"
+            name="producers"
+            placeholder="Gêneros"
           />
         </div>
-
+        <div class="col-md-6 d-grid gap-2 col-6 mx-auto">
+          <button
+            class="btn rounded-0 btn-danger"
+            type="button"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Adicione outro gênero caso possua mais de um"
+            onclick="addProducer()"
+          >
+            Adicionar mais produtores
+          </button>
+        </div>
+        <div class="col-md-6 d-grid gap-2 col-6 mx-auto">
+          <button
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Remova um produtor adicionado a mais"
+            class="btn rounded-0 btn-danger"
+            type="button"
+            onclick="removeProducer()"
+          >
+            Remover
+          </button>
+        </div>
+        <div id="new_inputProducer"></div>
+        <input
+          class="form-control rounded-0 border border-secondary"
+          type="hidden"
+          value="1"
+          id="total_chqProducer"
+        />
         <div class="d-grid gap-2">
           <button
             class="btn rounded-0 btn-danger btn-lg"
@@ -176,7 +157,7 @@
     function add() {
       var new_chq_no = parseInt($("#total_chq").val()) + 1;
       var new_input =
-        "<input type='text' class='form-control rounded-0 border border-secondary' name='genre' id='new_" +
+        "<input type='text' class='form-control rounded-0 border border-secondary' name='cast' id='new_" +
         new_chq_no +
         "'>";
       $("#new_input").append(new_input);
@@ -188,6 +169,23 @@
       if (last_chq_no > 1) {
         $("#new_" + last_chq_no).remove();
         $("#total_chq").val(last_chq_no - 1);
+      }
+    }
+    function addProducer() {
+      var new_chq_no = parseInt($("#total_chqProducer").val()) + 1;
+      var new_input =
+        "<input type='text' class='form-control rounded-0 border border-secondary' name='producers' id='new_" +
+        new_chq_no +
+        "'>";
+      $("#new_inputProducer").append(new_input);
+      $("#total_chqProducer").val(new_chq_no);
+    }
+
+    function removeProducer() {
+      var last_chq_no = $("#total_chqProducer").val();
+      if (last_chq_no > 1) {
+        $("#new_" + last_chq_no).remove();
+        $("#total_chqProducer").val(last_chq_no - 1);
       }
     }
   </script>

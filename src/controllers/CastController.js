@@ -1,14 +1,14 @@
-const CastCrew = require("../models/CastCrew");
+const Castcrew = require("../models/castcrew");
 
-const DeleteCastCrew = async (req, res) => {
+const Deletecastcrew = async (req, res) => {
   const id = req.params.id;
-  const castcrew = await CastCrew.findOne({ _id: id });
+  const castcrew = await Castcrew.findOne({ _id: id });
   if (!castcrew) {
     res.status(422).json({ message: "O usuario nao foi encontrado" });
     return;
   }
   try {
-    await CastCrew.deleteOne({ _id: id });
+    await castcrew.deleteOne({ _id: id });
     res.redirect("exclucast");
     // res.status(200).json({ message: "Filme removido" });
   } catch (error) {
@@ -16,7 +16,7 @@ const DeleteCastCrew = async (req, res) => {
   }
 };
 
-const EditCastCrew = async (req, res, next) => {
+const Editcastcrew = async (req, res, next) => {
   const id = req.params.id;
   const { cast, writer, director, producers } = req.body;
   const castcrew = {
@@ -29,8 +29,8 @@ const EditCastCrew = async (req, res, next) => {
   const dados = Object.assign({}, castcrew, { _id: id });
 
   try {
-    const updatedCastCrew = await CastCrew.updateOne({ _id: id }, dados);
-    if (updatedCastCrew.matchedCount === 0) {
+    const updatedcastcrew = await Castcrew.updateOne({ _id: id }, dados);
+    if (updatedcastcrew.matchedCount === 0) {
       res.status(422).json({ message: "O filme nao foi encontrado" });
       return;
     }
@@ -40,10 +40,10 @@ const EditCastCrew = async (req, res, next) => {
   }
 };
 
-const GetCastCrewById = async (req, res) => {
+const GetcastcrewById = async (req, res) => {
   const id = req.params.id;
   try {
-    const castcrew = await CastCrew.findOne({ _id: id });
+    const castcrew = await Castcrew.findOne({ _id: id });
     if (!castcrew) {
       res.status(422).json({ message: "O filme nao foi encontrado" });
       return;
@@ -54,9 +54,9 @@ const GetCastCrewById = async (req, res) => {
   }
 };
 
-const CreateCastCrew = async (req, res) => {
+const Createcastcrew = async (req, res) => {
   try {
-    var castcrew = new CastCrew();
+    var castcrew = new Castcrew();
     castcrew.cast = req.body.cast;
     castcrew.writer = req.body.writer;
     castcrew.director = req.body.director;
@@ -76,9 +76,9 @@ const CreateCastCrew = async (req, res) => {
   }
 };
 
-const listCastCrew = async (req, res) => {
+const listcastcrew = async (req, res) => {
   try {
-    CastCrew.find().then((doc) => {
+    Castcrew.find().then((doc) => {
       res.render("../src/views/tablecast", {
         item: doc,
       });
@@ -91,11 +91,11 @@ const listCastCrew = async (req, res) => {
   }
 };
 
-const listAllCastCrew = async (req, res, next) => {
+const listAllcastcrew = async (req, res, next) => {
   try {
-    const castJson = await CastCrew.find().then((filmes) => {
+    const castJson = await Castcrew.find().then((filmes) => {
       console.log(`Total de filmes: ${filmes.length}`);
-      const movies = CastCrew.find();
+      const movies = Castcrew.find();
       return movies;
     });
 
@@ -110,10 +110,10 @@ const listAllCastCrew = async (req, res, next) => {
 };
 
 module.exports = {
-  listAllCastCrew,
-  listCastCrew,
-  CreateCastCrew,
-  GetCastCrewById,
-  EditCastCrew,
-  DeleteCastCrew,
+  listAllcastcrew,
+  listcastcrew,
+  Createcastcrew,
+  GetcastcrewById,
+  Editcastcrew,
+  Deletecastcrew,
 };

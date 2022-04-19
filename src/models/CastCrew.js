@@ -9,4 +9,4 @@ const castCrewSchema = new Schema({
   producers: new Array(),
 });
 
-module.exports = mongoose.model("CastCrew", castCrewSchema);
+module.exports = mongoose.model("castcrew", castCrewSchema);

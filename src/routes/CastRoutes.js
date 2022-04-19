@@ -1,6 +1,6 @@
 const express = require("express");
 const routes = express.Router();
-const CastCrew = require("../controllers/CastController");
+const castcrew = require("../controllers/CastController");
 
 routes.use(function (req, res, next) {
   // this middleware will call for each requested
@@ -25,14 +25,14 @@ routes.get("/exclu", (req, res) => {
   res.render("../src/views/exclucast");
 });
 
-routes.get("/totalcast", CastCrew.listAllCastCrew, (req, res) => {
+routes.get("/totalcast", castcrew.listAllcastcrew, (req, res) => {
   res.render("postcast");
 });
 
-routes.get("/tablecast", CastCrew.listCastCrew);
-routes.post("/postcast", CastCrew.CreateCastCrew);
-routes.get("/castcrew/:id", CastCrew.GetCastCrewById);
-routes.patch("/castcrew/:id", CastCrew.EditCastCrew);
-routes.delete("/castcrew/:id", CastCrew.DeleteCastCrew);
+routes.get("/tablecast", castcrew.listcastcrew);
+routes.post("/postcast", castcrew.Createcastcrew);
+routes.get("/castcrew/:id", castcrew.GetcastcrewById);
+routes.patch("/castcrew/:id", castcrew.Editcastcrew);
+routes.delete("/castcrew/:id", castcrew.Deletecastcrew);
 
 module.exports = routes;
