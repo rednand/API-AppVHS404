@@ -1,58 +1,34 @@
 const CommingSoonMovies = require("../models/CommingMovie");
 
-const DeleteMovie = async (req, res) => {
-  const id = req.params.id;
-  const movies = await CommingSoonMovies.findOne({ _id: id });
-  if (!movies) {
-    res.status(422).json({ message: "O usuario nao foi encontrado" });
-    return;
-  }
+const listAll = async (req, res, next) => {
   try {
-    await CommingSoonMovies.deleteOne({ _id: id });
-    res.redirect("exclu");
-    // res.status(200).json({ message: "Filme removido" });
-  } catch (error) {
-    res.status(500).json({ error: error });
+    const { page = 1, limit = 30 } = req.query;
+    const movies = await CommingSoonMovies.find().populate("castcrew")
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+    console.log("total movies:", movies.length);
+    res.status(200).json(movies);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Internal server error",
+      error: err,
+    });
   }
 };
 
-const EditMovie = async (req, res, next) => {
-  const id = req.params.id;
-  const {
-    name,
-    original_language,
-    original_title,
-    overview,
-    release_date,
-    trailer,
-    genre,
-    castcrew,
-    poster,
-  } = req.body;
-  console.log(poster);
-  const movies = {
-    name,
-    original_language,
-    original_title,
-    overview,
-    release_date,
-    trailer,
-    genre,
-    castcrew,
-    poster,
-  };
-
-  const dados = Object.assign({}, movies, { _id: id });
-
+const listMovieTable = async (req, res) => {
   try {
-    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, dados);
-    if (updatedMovies.matchedCount === 0) {
-      res.status(422).json({ message: "O filme nao foi encontrado" });
-      return;
-    }
-    res.status(200).json({ message: "update", movies });
-  } catch (error) {
-    res.status(500).json({ error: error });
+    CommingSoonMovies.find().then((doc) => {
+      res.render("../src/views/table", {
+        item: doc,
+      });
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: err,
+    });
   }
 };
 
@@ -96,7 +72,13 @@ const CreateMovie = async (req, res) => {
   }
 };
 
-const listMovieTable = async (req, res) => {
+const DeleteMovie = async (req, res) => {
+  const id = req.params.id;
+  const movies = await CommingSoonMovies.findOne({ _id: id });
+  if (!movies) {
+    res.status(422).json({ message: "O usuario nao foi encontrado" });
+    return;
+  }
   try {
     CommingSoonMovies.find()
       .populate("castcrew")
@@ -113,29 +95,64 @@ const listMovieTable = async (req, res) => {
   }
 };
 
-const listAll = async (req, res, next) => {
-  try {
-    const moviesJSON = await CommingSoonMovies.find().then((filmes) => {
-      console.log(`Total de filmes: ${filmes.length}`);
-      const movies = CommingSoonMovies.find().populate("castcrew");
-      return movies;
-    });
+// const listAll = async (req, res, next) => {
+//   try {
+//     const moviesJSON = await CommingSoonMovies.find().then((filmes) => {
+//       console.log(`Total de filmes: ${filmes.length}`);
+//       const movies = CommingSoonMovies.find().populate("castcrew");
+//       return movies;
+//     });
+//     await CommingSoonMovies.deleteOne({ _id: id });
+//     res.redirect("exclu");
+//     // res.status(200).json({ message: "Filme removido" });
+//   } catch (error) {
+//     res.status(500).json({ error: error });
+//   }
+// };
 
-    res.status(200).json(moviesJSON);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Internal server error",
-      error: err,
-    });
+const EditMovie = async (req, res, next) => {
+  const id = req.params.id;
+  const {
+    name,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    trailer,
+    genre,
+  } = req.body;
+  const poster = req.file.url;
+  console.log(poster);
+  const movies = {
+    name,
+    original_language,
+    original_title,
+    overview,
+    release_date,
+    trailer,
+    genre,
+    poster,
+  };
+
+  const dados = Object.assign({}, movies, { _id: id });
+
+  try {
+    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, dados);
+    if (updatedMovies.matchedCount === 0) {
+      res.status(422).json({ message: "O filme nao foi encontrado" });
+      return;
+    }
+    res.status(200).json({ message: "update", movies });
+  } catch (error) {
+    res.status(500).json({ error: error });
   }
 };
 
 module.exports = {
   listAll,
   listMovieTable,
-  CreateMovie,
   GetMovieById,
+  CreateMovie,
   EditMovie,
   DeleteMovie,
 };
