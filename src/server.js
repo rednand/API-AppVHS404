@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(castRoutes);
-app.use(movieRoutes);
+app.use(movieRoutes)
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE");
@@ -43,6 +43,6 @@ mongoose
   )
   .then(() => {
     console.info("Servidor rodando...");
-    app.listen(process.env.PORT, "0.0.0.0");
+    app.listen(process.env.PORT || 3000);
   })
   .catch((err) => console.log(err));
