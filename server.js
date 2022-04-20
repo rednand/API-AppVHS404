@@ -31,10 +31,7 @@ app.use(function (req, res, next) {
 
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3002;
-}
+const PORT = process.env.PORT || 3000;
 
 mongoose
   .connect(
@@ -46,7 +43,8 @@ mongoose
     }
   )
   .then(() => {
-    console.info(`Servidor rodando na porta ${port}...`);
-    app.listen(process.env.PORT || 3003);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Our app is running on port ${PORT}`);
+    });
   })
   .catch((err) => console.log(err));
