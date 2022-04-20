@@ -1,6 +1,6 @@
 const express = require("express");
 const routes = express.Router();
-const castcrew = require("../controllers/CastController");
+const castcrew = require("../controllers/castcontroller");
 
 routes.use(function (req, res, next) {
   // this middleware will call for each requested
