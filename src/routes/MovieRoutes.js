@@ -21,6 +21,10 @@ routes.get("/", (req, res) => {
   res.render("../src/views/form");
 });
 
+// routes.get("/edit/:id", (req, res) => {
+//   res.render("../src/views/editform");
+// });
+
 routes.get("/exclu", (req, res) => {
   res.render("../src/views/exclu");
 });
@@ -31,10 +35,9 @@ routes.get("/total", Movie.listAll, (req, res) => {
 
 routes.get("/table", Movie.listMovieTable);
 routes.post("/post", Movie.CreateMovie);
+routes.get("/edit/:id", Movie.listMovieTablebyId);
 routes.get("/:id", Movie.GetMovieById);
-routes.patch("/:id", Movie.EditMovie);
+routes.patch("/edit/:id", Movie.EditMovie);
 routes.delete("/:id", Movie.DeleteMovie);
-// routes.post("/post", upload.single("poster"), Movie.CreateMovie);
-// routes.patch("/:id", upload.single("poster"), Movie.EditMovie);
 
 module.exports = routes;

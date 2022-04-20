@@ -9,7 +9,7 @@ const Deletecastcrew = async (req, res) => {
   }
   try {
     await Castcrew.deleteOne({ _id: id });
-    res.redirect("castdelete");
+    res.redirect("http://localhost:3000/castdelete");
     // res.status(200).json({ message: "Filme removido" });
   } catch (error) {
     res.status(500).json({ error: error });

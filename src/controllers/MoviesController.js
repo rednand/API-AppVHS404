@@ -33,6 +33,22 @@ const listMovieTable = async (req, res) => {
   }
 };
 
+const listMovieTablebyId = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await CommingSoonMovies.findOne({ _id: id }).then((movie) => {
+      res.render("../src/views/editform", {
+        movies: movie,
+      });
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: err,
+    });
+  }
+};
+
 const GetMovieById = async (req, res) => {
   const id = req.params.id;
   try {
@@ -99,9 +115,8 @@ const EditMovie = async (req, res, next) => {
     release_date,
     trailer,
     genre,
+    poster,
   } = req.body;
-  const poster = req.file.url;
-  console.log(poster);
   const movies = {
     name,
     original_language,
@@ -134,4 +149,5 @@ module.exports = {
   CreateMovie,
   EditMovie,
   DeleteMovie,
+  listMovieTablebyId,
 };

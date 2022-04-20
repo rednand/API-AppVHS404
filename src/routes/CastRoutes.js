@@ -33,6 +33,6 @@ routes.get("/tablecast", castcrew.listcastcrew);
 routes.post("/postcast", castcrew.Createcastcrew);
 routes.get("/castcrew/:id", castcrew.GetcastcrewById);
 routes.patch("/castcrew/:id", castcrew.Editcastcrew);
-routes.delete("/:id", castcrew.Deletecastcrew);
+routes.delete("/tablecast/:id", castcrew.Deletecastcrew);
 
 module.exports = routes;
