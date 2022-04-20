@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server localhost 3000",
+    "start": "nodemon server 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
