@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(castRoutes);
-app.use(movieRoutes)
+app.use(movieRoutes);
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE");
@@ -31,6 +31,10 @@ app.use(function (req, res, next) {
 
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3002;
+}
 
 mongoose
   .connect(
@@ -42,7 +46,7 @@ mongoose
     }
   )
   .then(() => {
-    console.info("Servidor rodando na porta 3000...");
-    app.listen(process.env.PORT || 3000);
+    console.info(`Servidor rodando na porta ${port}...`);
+    app.listen(process.env.PORT || 3003);
   })
   .catch((err) => console.log(err));
