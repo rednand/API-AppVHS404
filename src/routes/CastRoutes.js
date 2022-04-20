@@ -21,8 +21,8 @@ routes.get("/cast", (req, res) => {
   res.render("../src/views/formcast");
 });
 
-routes.get("/exclu", (req, res) => {
-  res.render("../src/views/exclucast");
+routes.get("/castdelete", (req, res) => {
+  res.render("../src/views/castdelete");
 });
 
 routes.get("/totalcast", castcrew.listAllcastcrew, (req, res) => {
@@ -33,6 +33,6 @@ routes.get("/tablecast", castcrew.listcastcrew);
 routes.post("/postcast", castcrew.Createcastcrew);
 routes.get("/castcrew/:id", castcrew.GetcastcrewById);
 routes.patch("/castcrew/:id", castcrew.Editcastcrew);
-routes.delete("/castcrew/:id", castcrew.Deletecastcrew);
+routes.delete("/:id", castcrew.Deletecastcrew);
 
 module.exports = routes;

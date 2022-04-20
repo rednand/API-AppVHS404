@@ -4,12 +4,12 @@ const Deletecastcrew = async (req, res) => {
   const id = req.params.id;
   const castcrew = await Castcrew.findOne({ _id: id });
   if (!castcrew) {
-    res.status(422).json({ message: "O usuario nao foi encontrado" });
+    res.status(422).json({ message: "O elenco nao foi encontrado" });
     return;
   }
   try {
-    await castcrew.deleteOne({ _id: id });
-    res.redirect("exclucast");
+    await Castcrew.deleteOne({ _id: id });
+    res.redirect("castdelete");
     // res.status(200).json({ message: "Filme removido" });
   } catch (error) {
     res.status(500).json({ error: error });
