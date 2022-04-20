@@ -43,7 +43,7 @@ mongoose
     }
   )
   .then(() => {
-    app.listen(PORT, "0.0.0.0", () => {
+    app.listen(PORT, () => {
       console.log(`Our app is running on port ${PORT}`);
     });
   })
