@@ -128,10 +128,11 @@ const EditMovie = async (req, res, next) => {
     poster,
   };
 
-  const dados = Object.assign({}, movies, { _id: id });
-
   try {
-    const updatedMovies = await CommingSoonMovies.updateOne({ _id: id }, dados);
+    const updatedMovies = await CommingSoonMovies.updateOne(
+      { _id: id },
+      movies
+    );
     if (updatedMovies.matchedCount === 0) {
       res.status(422).json({ message: "O filme nao foi encontrado" });
       return;

@@ -13,6 +13,12 @@ routes.use(function (req, res, next) {
     req.method = "DELETE";
     // and set requested url to /delete/:id
     req.url = req.path;
+  } else if (req.query._method == "PATCH") {
+    // change the original METHOD
+    // into DELETE method
+    req.method = "PATCH";
+    // and set requested url to /delete/:id
+    req.url = req.path;
   }
   next();
 });
@@ -37,7 +43,7 @@ routes.get("/table", Movie.listMovieTable);
 routes.post("/post", Movie.CreateMovie);
 routes.get("/edit/:id", Movie.listMovieTablebyId);
 routes.get("/:id", Movie.GetMovieById);
-routes.patch("/edit/:id", Movie.EditMovie);
+routes.patch("/editpatch/:id", Movie.EditMovie);
 routes.delete("/:id", Movie.DeleteMovie);
 
 module.exports = routes;
