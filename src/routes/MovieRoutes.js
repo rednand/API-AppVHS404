@@ -22,23 +22,15 @@ routes.use(function (req, res, next) {
   }
   next();
 });
-
 routes.get("/", (req, res) => {
   res.render("../src/views/form");
 });
-
-// routes.get("/edit/:id", (req, res) => {
-//   res.render("../src/views/editform");
-// });
-
 routes.get("/exclu", (req, res) => {
   res.render("../src/views/exclu");
 });
-
 routes.get("/total", Movie.listAll, (req, res) => {
   res.render("post");
 });
-
 routes.get("/table", Movie.listMovieTable);
 routes.post("/post", Movie.CreateMovie);
 routes.get("/edit/:id", Movie.listMovieTablebyId);
