@@ -5,8 +5,8 @@ const morgan = require("morgan");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const movieRoutes = require("../src/routes/movieroutes.js");
-const castroutes = require("../src/routes/castroutes.js");
+const movieRoutes = require("../routes/MovieRoutes");
+const castroutes = require("../routes/castroutes");
 require("dotenv").config();
 
 app.set("view engine", "ejs");
