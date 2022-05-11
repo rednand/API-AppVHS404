@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const movieRoutes = require("../src/routes/MovieRoutes");
+const movieRoutes = require("../src/routes/movieroutes");
 const castroutes = require("../src/routes/castroutes");
 require("dotenv").config();
 
@@ -42,7 +42,7 @@ mongoose
     }
   )
   .then(() => {
-    app.listen(PORT || 3000, () => {
+    app.listen(PORT || 3002, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });
   })
