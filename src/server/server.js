@@ -6,7 +6,7 @@ const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const movieRoutes = require("../routes/MovieRoutes");
-const castroutes = require("../routes/castroutes");
+const castroutes = require("../routes/CastRoutes");
 require("dotenv").config();
 
 
