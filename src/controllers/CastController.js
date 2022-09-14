@@ -1,4 +1,4 @@
-const Castcrew = require("../models/castcrew");
+const Castcrew = require("../models/CastCrew");
 
 const Deletecastcrew = async (req, res) => {
   const id = req.params.id;
