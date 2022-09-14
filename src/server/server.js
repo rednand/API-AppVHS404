@@ -31,18 +31,13 @@ app.use(function (req, res, next) {
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 const PORT = process.env.PORT;
-
+console.log(DB_USER, DB_PASSWORD, PORT);
 mongoose
   .connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.fzlwr.mongodb.net/horrormoviesapi
-`,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.fzlwr.mongodb.net/horrormoviesapi`
   )
   .then(() => {
-    app.listen(PORT || 3002, () => {
+    app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });
   })

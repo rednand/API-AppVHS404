@@ -20,4 +20,4 @@ const movieSchema = new Schema({
   genre: new Array(),
 });
 
-module.exports = mongoose.model("CommingSoonMovies", movieSchema);
+module.exports = mongoose.model("commingsoonmovies", movieSchema);
