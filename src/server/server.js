@@ -9,7 +9,6 @@ const movieRoutes = require("../routes/MovieRoutes");
 const castroutes = require("../routes/CastRoutes");
 require("dotenv").config();
 
-
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static("views"));
@@ -30,13 +29,12 @@ app.use(function (req, res, next) {
 });
 
 const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
+const DB_PASSWORD = process.env.DB_PASSWORD;
 const PORT = process.env.PORT;
 console.log(DB_USER, DB_PASSWORD, PORT);
+const uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.fzlwr.mongodb.net/horrormoviesapi`;
 mongoose
-  .connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.fzlwr.mongodb.net/horrormoviesapi`
-  )
+  .connect(uri)
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
