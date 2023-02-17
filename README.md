@@ -4,4 +4,4 @@
 
 API de nodejs feita para AppQuarto237
 
-Deploy da API na VERCEL: https://api-app-quarto237.vercel.app/
+Deploy da API na VERCEL: <a target="_blank"> https://api-app-quarto237.vercel.app/ </a>
