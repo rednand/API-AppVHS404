@@ -20,4 +20,16 @@ const movieSchema = new Schema({
   genre: new Array(),
 });
 
-module.exports = mongoose.model("CommingSoonMovies", movieSchema);
+const movieInformSchema = new Schema({
+  name: String,
+  overview: String,
+  fonte: String,
+  release_date: Date,
+});
+
+const schemas = {
+  movie: mongoose.model("commingsoonmovies", movieSchema),
+  movieInform: mongoose.model("movieinform", movieInformSchema),
+};
+
+module.exports = schemas;
