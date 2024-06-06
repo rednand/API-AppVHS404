@@ -74,15 +74,19 @@
       </div>
       <div class="col-md-12">
         <label for="">Lançamento</label>
-        <p class="pLabel"><%- movies.release_date %> </p>
+        <p class="pLabel" id="data"><%- movies.release_date %> </p>
         <input class="form-control rounded-0 border border-secondary" type="datetime-local" id="release_date"
           value="<%- movies.release_date %>" name="release_date" placeholder="Data" />
       </div>
       <div class="col-md-12">
         <label for="">Gênero</label>
-        <p class="pLabel"><%- movies.genre %> </p>
-        <input class="form-control rounded-0 border border-secondary" type="text" id="genre" name="genre"
-          value="<%- movies.genre %>" placeholder="Gêneros" />
+        <% movies.genre.forEach(function(item) {%>
+
+          <p class="pLabel"><%- item %></p>
+
+          <%})%>
+            <input class="form-control rounded-0 border border-secondary" type="text" id="genre" name="genre"
+              value="<%- movies.genre %>" placeholder="Gêneros" />
       </div>
       <div class="col-md-6 d-grid gap-2 col-6 mx-auto">
         <button class="btn rounded-0 btn-danger" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -100,7 +104,7 @@
       <input class="form-control rounded-0 border border-secondary" type="hidden" value="1" id="total_chq" />
       <div class="d-grid gap-2">
         <label for="poster" class="form-label">Poster</label>
-        <img src="<%- movies.poster %> " />
+        <img width="150" height="250" src="<%- movies.poster %> " />
         <button class="btn rounded-0 btn-danger" name="poster">
           <a target="_blank" class="link-dark fw-bold" href="https://imgbox.com/">
             Adicionar imagem</a>
@@ -121,7 +125,17 @@
     </form>
   </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dataRelease = "<%- movies.release_date %>"
+    const originalDate = moment(dataRelease);
+    document.querySelector("#data").innerHTML = originalDate.format('DD/MM/YYYY');
+    document.querySelector("#release_date").value = originalDate.format('YYYY-MM-DDT00:00');
+  });
+</script>
 <script>
   function add() {
     var new_chq_no = parseInt($("#total_chq").val()) + 1;
@@ -144,6 +158,10 @@
   const url = "/editpatch/<%- movies._id %>";
 
   $('form[name="form"]').submit(function () {
+    const genres = [];
+    $('input[name="genre"]').each(function () {
+      genres.push($(this).val());
+    });
     $.ajax({
       method: "PATCH",
       url: url,
@@ -154,7 +172,7 @@
         overview: $("#overview").val(),
         trailer: $("#trailer").val(),
         release_date: $("#release_date").val(),
-        genre: $("#genre").val(),
+        genre: genres,
         poster: $("#poster").val(),
       },
       success: function (data) {
