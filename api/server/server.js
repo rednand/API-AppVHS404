@@ -12,7 +12,7 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", require("ejs").renderFile)
 app.set("view engine", "ejs");
 
-
+mongoose.set('strictQuery', false);
 app.use(express.static("views"));
 app.use(morgan("dev"));
 app.use(express.json());
